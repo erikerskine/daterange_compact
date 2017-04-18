@@ -1,0 +1,4 @@
+name = Compact Date Range Formatter
+type = module
+core = 7.x
+description = Provides a compact formatter for date range fields.

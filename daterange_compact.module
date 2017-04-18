@@ -1,0 +1,55 @@
+<?php
+
+
+/**
+ * Implements hook_field_formatter_info().
+ */
+function daterange_compact_field_formatter_info() {
+  $info['daterange_compact'] = array(
+    'label' => t('Compact'),
+    'field types' => array('datetime'),
+    'settings' => array(),
+  );
+  return $info;
+}
+
+
+/**
+ * Implements hook_field_formatter_view().
+ */
+function daterange_compact_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+
+  foreach ($items as $delta => $item) {
+    $value1 = $item['value'];
+    $value2 = $item['value2'];
+
+    $output = '';
+    if ($value1 && $value2) {
+      $start_date = new DateTime($value1);
+      $end_date = new DateTime($value2);
+
+      // we always show the end date
+      $output = check_plain($end_date->format('j F Y'));
+
+      if (substr($value1, 0, 4) !== substr($value2, 0, 4)) {
+        // the years differ, so we need to show the full start date
+        $output = check_plain($start_date->format('j F Y')) . '&ndash;' . $output;
+      }
+      else if (substr($value1, 0, 7) !== substr($value2, 0, 7)) {
+        // the months differ (but not the year), so we need to show the start day and month
+        $output = check_plain($start_date->format('j F')) . '&ndash;' . $output;
+      }
+      else if (substr($value1, 0, 10) !== substr($value2, 0, 10)) {
+        // the days differ (but not the month), so we need to show the start day
+        $output = check_plain($start_date->format('j')) . '&ndash;' . $output;
+      }
+    }
+
+    $element[$delta] = array(
+      '#markup' => $output,
+    );
+  }
+
+  return $element;
+}
