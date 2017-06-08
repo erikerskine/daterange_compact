@@ -3,4 +3,4 @@ type: module
 description: 'Provides a compact formatter for date range fields.'
 core: 8.x
 dependencies:
-  - datetime_range
+  - drupal:datetime_range

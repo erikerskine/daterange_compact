@@ -112,8 +112,8 @@ class DateRangeCompactFormatter extends FormatterBase implements ContainerFactor
 
     $form['format_type'] = [
       '#type' => 'select',
-      '#title' => t('Date and time range format'),
-      '#description' => t("Choose a format for displaying the date and time range."),
+      '#title' => $this->t('Date and time range format'),
+      '#description' => $this->t("Choose a format for displaying the date and time range."),
       '#options' => $options,
       '#default_value' => $this->getSetting('format_type'),
     ];
@@ -126,7 +126,7 @@ class DateRangeCompactFormatter extends FormatterBase implements ContainerFactor
    */
   public function settingsSummary() {
     $summary = parent::settingsSummary();
-    $summary[] = t('Format: @format', ['@format' => $this->getSetting('format_type')]);
+    $summary[] = $this->t('Format: @format', ['@format' => $this->getSetting('format_type')]);
     return $summary;
   }
 
